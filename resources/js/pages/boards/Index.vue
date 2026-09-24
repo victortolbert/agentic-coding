@@ -2,7 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
-import { create, index } from '@/routes/boards';
+import { create, index, show } from '@/routes/boards';
 import type { Board } from '@/types';
 
 defineOptions({
@@ -38,7 +38,9 @@ defineProps<{ boards: Board[] }>();
                 :key="board.id"
                 class="rounded-xl border border-sidebar-border/70 p-4 dark:border-sidebar-border"
             >
-                <p class="font-medium">{{ board.title }}</p>
+                <Link :href="show(board.id)" class="font-medium">
+                    {{ board.title }}
+                </Link>
                 <p class="text-sm text-muted-foreground">
                     {{ board.pins_count }} pins
                 </p>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Board;
+use App\Models\Pin;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 
@@ -42,5 +43,39 @@ describe('store', function () {
             ->assertSessionHasErrors('title');
 
         expect(Board::query()->count())->toBe(0);
+    });
+});
+
+describe('show, edit and update', function () {
+    test('the owner sees the board and its pins', function () {
+        $board = Board::factory()->has(Pin::factory()->count(2))->create();
+
+        $this->actingAs($board->owner)
+            ->get(route('boards.show', $board))
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('boards/Show')
+                ->where('board.title', $board->title)
+                ->has('pins', 2));
+    });
+
+    test('the owner can update the board', function () {
+        $board = Board::factory()->create();
+
+        $this->actingAs($board->owner)
+            ->put(route('boards.update', $board), ['title' => 'Renamed'])
+            ->assertRedirect(route('boards.show', $board));
+
+        expect($board->fresh()->title)->toBe('Renamed');
+    });
+
+    test('anyone else gets 403', function () {
+        $board = Board::factory()->create(['title' => 'Private']);
+        $this->actingAs(User::factory()->create());
+
+        $this->get(route('boards.show', $board))->assertForbidden();
+        $this->get(route('boards.edit', $board))->assertForbidden();
+        $this->put(route('boards.update', $board), ['title' => 'Mine now'])->assertForbidden();
+
+        expect($board->fresh()->title)->toBe('Private');
     });
 });
