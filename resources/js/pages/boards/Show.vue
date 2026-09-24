@@ -5,6 +5,7 @@ import InputError from '@/components/InputError.vue';
 import PinCard from '@/components/PinCard.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import BoardsController from '@/actions/App/Http/Controllers/BoardsController';
 import { edit, index, show } from '@/routes/boards';
 import type { Board, Pin } from '@/types';
 
@@ -16,6 +17,15 @@ setLayoutProps({
         { title: props.board.title, href: show(props.board.id) },
     ],
 });
+
+function toggleSharing(): void {
+    router.visit(
+        props.board.is_public
+            ? BoardsController.unshare(props.board.id)
+            : BoardsController.share(props.board.id),
+        { preserveScroll: true },
+    );
+}
 
 function removePin(pin: Pin): void {
     router.visit(BoardPinsController.destroy(pin.id), {
@@ -37,10 +47,24 @@ function removePin(pin: Pin): void {
                     {{ props.board.description }}
                 </p>
             </div>
-            <Button variant="ghost" size="sm" as-child>
-                <Link :href="edit(props.board.id)">Edit</Link>
-            </Button>
+            <div class="flex items-center gap-2">
+                <Button variant="outline" size="sm" @click="toggleSharing">
+                    {{ props.board.is_public ? 'Make private' : 'Share' }}
+                </Button>
+                <Button variant="ghost" size="sm" as-child>
+                    <Link :href="edit(props.board.id)">Edit</Link>
+                </Button>
+            </div>
         </header>
+
+        <p v-if="props.board.is_public" class="text-sm text-muted-foreground">
+            Public link:
+            <a
+                :href="BoardsController.public.url(props.board.id)"
+                class="underline"
+                >{{ BoardsController.public.url(props.board.id) }}</a
+            >
+        </p>
 
         <Form
             v-bind="BoardPinsController.store.form(props.board.id)"

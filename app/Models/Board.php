@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property int $user_id
  * @property string $title
  * @property string|null $description
+ * @property bool $is_public
  * @property string|null $share_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -44,6 +45,18 @@ class Board extends Model
     public function pins(): HasMany
     {
         return $this->hasMany(Pin::class);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_public' => 'boolean',
+        ];
     }
 
     public function isShared(): bool
