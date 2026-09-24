@@ -30,6 +30,9 @@ reads every diff, so keep them small enough to read.
 
 ## Before you say you are done
 
-- `composer test` passes: Pint, PHPStan and Pest.
-- `npm run check` and `npm run types:check` pass.
+- `composer ci:check` passes. It is exactly what CI runs: `npm run check`,
+  `npm run types:check`, then `composer test` (Pint, PHPStan and Pest).
+  Passing a subset of it locally is not passing.
+- Nothing you did needs a new secret or environment variable without a line
+  for it in `docs/deploy.md`.
 - Say what you did not do, and anything you were unsure about.
