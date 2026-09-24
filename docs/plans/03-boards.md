@@ -37,3 +37,6 @@ One commit each, reviewed before the next one starts.
   are loaded by `show`, and adding them is `BoardPinsController`.
 - The routes go in `routes/boards.php`, not `routes/web.php`, so each
   resource's routes can be read on their own.
+- `store` redirects to the board list in slice 2, and to the new board in
+  slice 3, once `show` exists. Redirecting to a route that is not there yet
+  would break the build between slices.

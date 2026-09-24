@@ -22,3 +22,25 @@ describe('index', function () {
                 ->where('boards.0.title', 'Mine'));
     });
 });
+
+describe('store', function () {
+    test('creates a board for you', function () {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->post(route('boards.store'), ['title' => 'Spring campaign', 'description' => 'Warm, grainy, outdoors'])
+            ->assertRedirect();
+
+        expect($user->boards()->sole())
+            ->title->toBe('Spring campaign')
+            ->description->toBe('Warm, grainy, outdoors');
+    });
+
+    test('a board needs a title', function () {
+        $this->actingAs(User::factory()->create())
+            ->post(route('boards.store'), ['title' => ''])
+            ->assertSessionHasErrors('title');
+
+        expect(Board::query()->count())->toBe(0);
+    });
+});
