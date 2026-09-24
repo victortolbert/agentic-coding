@@ -26,11 +26,11 @@ git diff lesson/01-solution
 | 2. Designing the resources before you prompt | `lesson/02-start` | `lesson/02-solution` | Fill in `docs/resources.md` from `docs/brief.md`, then have the agent write the migrations and models from it |
 | 3. Driving the agent: plans, diffs and review | `lesson/03-start` | `lesson/03-solution` | Have the agent plan the Boards controller, then build it one reviewed slice at a time |
 | 4. Tests as the contract you hand the agent | `lesson/04-start` | `lesson/04-solution` | Turn the todos in `tests/Feature/Boards/BoardPinsTest.php` into failing tests, then have the agent make them pass |
-| 5. Taste at speed: layout, spacing and motion | *not yet published* | | |
+| 5. Taste at speed: layout, spacing and motion | `lesson/05-start` | `lesson/05-solution` | Write `docs/taste.md` as rules, have the agent apply them to the board page, and judge the result in the browser |
 | 6. Shipping: environments, secrets and the deploy | *not yet published* | | |
 | 7. When the agent is wrong | *not yet published* | | |
 
-Lessons 5 to 7 are being written. Their checkpoints appear here as each lesson ships; buying the course once covers all of them. Watch this repository, or follow the course, to know when they land.
+Lessons 6 and 7 are being written. Their checkpoints appear here as each lesson ships; buying the course once covers all of them. Watch this repository, or follow the course, to know when they land.
 
 ## What you need
 
