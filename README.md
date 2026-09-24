@@ -28,9 +28,9 @@ git diff lesson/01-solution
 | 4. Tests as the contract you hand the agent | `lesson/04-start` | `lesson/04-solution` | Turn the todos in `tests/Feature/Boards/BoardPinsTest.php` into failing tests, then have the agent make them pass |
 | 5. Taste at speed: layout, spacing and motion | `lesson/05-start` | `lesson/05-solution` | Write `docs/taste.md` as rules, have the agent apply them to the board page, and judge the result in the browser |
 | 6. Shipping: environments, secrets and the deploy | `lesson/06-start` | `lesson/06-solution` | Write `docs/deploy.md`, get CI green on your fork, and put the app on a real URL |
-| 7. When the agent is wrong | *not yet published* | | |
+| 7. When the agent is wrong | `lesson/07-start` | `lesson/07-solution` | The last commit at `lesson/07-start` is an agent's board sharing. CI is green. Find what is wrong with it, then redo it |
 
-Lesson 7 is being written. Their checkpoints appear here as each lesson ships; buying the course once covers all of them. Watch this repository, or follow the course, to know when they land.
+Every lesson's checkpoints are here. The lessons themselves are at [designcoder.net](https://designcoder.net/courses/agentic-coding).
 
 ## What you need
 
