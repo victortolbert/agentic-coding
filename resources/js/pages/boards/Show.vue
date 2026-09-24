@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Form, Head, Link, router, setLayoutProps } from '@inertiajs/vue3';
 import BoardPinsController from '@/actions/App/Http/Controllers/BoardPinsController';
+import SharedBoardsController from '@/actions/App/Http/Controllers/SharedBoardsController';
 import InputError from '@/components/InputError.vue';
 import PinCard from '@/components/PinCard.vue';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,11 @@ import { Input } from '@/components/ui/input';
 import { edit, index, show } from '@/routes/boards';
 import type { Board, Pin } from '@/types';
 
-const props = defineProps<{ board: Board; pins: Pin[] }>();
+const props = defineProps<{
+    board: Board;
+    pins: Pin[];
+    shareUrl: string | null;
+}>();
 
 setLayoutProps({
     breadcrumbs: [
@@ -17,7 +22,7 @@ setLayoutProps({
     ],
 });
 
-function removePin(pin: Pin): void {
+function removePin(pin: Pick<Pin, 'id'>): void {
     router.visit(BoardPinsController.destroy(pin.id), {
         preserveScroll: true,
     });
@@ -37,10 +42,38 @@ function removePin(pin: Pin): void {
                     {{ props.board.description }}
                 </p>
             </div>
-            <Button variant="ghost" size="sm" as-child>
-                <Link :href="edit(props.board.id)">Edit</Link>
-            </Button>
+            <div class="flex items-center gap-2">
+                <Form
+                    v-if="props.shareUrl === null"
+                    v-bind="SharedBoardsController.store.form()"
+                    preserve-scroll
+                >
+                    <input
+                        type="hidden"
+                        name="board_id"
+                        :value="props.board.id"
+                    />
+                    <Button variant="outline" size="sm">Share</Button>
+                </Form>
+                <Form
+                    v-else
+                    v-bind="SharedBoardsController.destroy.form(props.board.id)"
+                    preserve-scroll
+                >
+                    <Button variant="ghost" size="sm">Stop sharing</Button>
+                </Form>
+                <Button variant="ghost" size="sm" as-child>
+                    <Link :href="edit(props.board.id)">Edit</Link>
+                </Button>
+            </div>
         </header>
+
+        <p v-if="props.shareUrl" class="text-sm text-muted-foreground">
+            Anyone with this link can see the board:
+            <a :href="props.shareUrl" class="text-foreground underline">
+                {{ props.shareUrl }}
+            </a>
+        </p>
 
         <Form
             v-bind="BoardPinsController.store.form(props.board.id)"

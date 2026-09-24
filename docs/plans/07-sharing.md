@@ -27,7 +27,10 @@ was reverted instead, and redone from the inputs.
 
 `tests/Feature/Boards/BoardSharingTest.php`, written first and committed red.
 
-## Slices
+## Build
+
+One commit. The contract covers all three parts, and the diff is under 200
+lines, so it is readable in one sitting.
 
 1. **Share and stop sharing.** `SharedBoardsController@store` (takes
    `board_id`, makes a new token) and `@destroy` (clears it). Owner only.

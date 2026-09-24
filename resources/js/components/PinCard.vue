@@ -2,9 +2,11 @@
 import { X } from '@lucide/vue';
 import type { Pin } from '@/types';
 
-defineProps<{ pin: Pin; removable?: boolean }>();
+type PinCardPin = Pick<Pin, 'id' | 'image_url' | 'note'>;
 
-defineEmits<{ remove: [pin: Pin] }>();
+defineProps<{ pin: PinCardPin; removable?: boolean }>();
+
+defineEmits<{ remove: [pin: PinCardPin] }>();
 </script>
 
 <template>

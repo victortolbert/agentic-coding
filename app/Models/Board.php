@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 /**
  * A named collection of pins, owned by one member. Whether it is shared is
@@ -49,5 +50,18 @@ class Board extends Model
     public function isShared(): bool
     {
         return $this->share_token !== null;
+    }
+
+    /**
+     * Always a new token, so a link that was turned off stays dead.
+     */
+    public function share(): void
+    {
+        $this->forceFill(['share_token' => Str::random(40)])->save();
+    }
+
+    public function stopSharing(): void
+    {
+        $this->forceFill(['share_token' => null])->save();
     }
 }

@@ -49,6 +49,7 @@ class BoardsController extends Controller
         return Inertia::render('boards/Show', [
             'board' => $board->only(['id', 'title', 'description']),
             'pins' => $board->pins()->latest()->get(['id', 'board_id', 'image_url', 'note']),
+            'shareUrl' => $board->isShared() ? route('public-boards.show', $board->share_token) : null,
         ]);
     }
 
