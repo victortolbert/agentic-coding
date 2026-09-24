@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head, setLayoutProps } from '@inertiajs/vue3';
+import { Form, Head, router, setLayoutProps } from '@inertiajs/vue3';
 import BoardsController from '@/actions/App/Http/Controllers/BoardsController';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
@@ -18,6 +18,15 @@ setLayoutProps({
         { title: 'Edit', href: edit(props.board.id) },
     ],
 });
+
+function destroyBoard(): void {
+    // eslint-disable-next-line no-alert
+    if (!window.confirm('Delete this board and every pin on it?')) {
+        return;
+    }
+
+    router.visit(BoardsController.destroy(props.board.id));
+}
 </script>
 
 <template>
@@ -56,5 +65,11 @@ setLayoutProps({
 
             <Button :disabled="processing">Save</Button>
         </Form>
+
+        <div class="border-t pt-6">
+            <Button variant="destructive" @click="destroyBoard">
+                Delete board
+            </Button>
+        </div>
     </div>
 </template>

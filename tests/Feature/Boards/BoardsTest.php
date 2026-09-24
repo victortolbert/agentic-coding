@@ -79,3 +79,26 @@ describe('show, edit and update', function () {
         expect($board->fresh()->title)->toBe('Private');
     });
 });
+
+describe('destroy', function () {
+    test('the owner can delete a board, and its pins go with it', function () {
+        $board = Board::factory()->has(Pin::factory()->count(2))->create();
+
+        $this->actingAs($board->owner)
+            ->delete(route('boards.destroy', $board))
+            ->assertRedirect(route('boards.index'));
+
+        expect(Board::query()->count())->toBe(0)
+            ->and(Pin::query()->count())->toBe(0);
+    });
+
+    test('anyone else gets 403', function () {
+        $board = Board::factory()->create();
+
+        $this->actingAs(User::factory()->create())
+            ->delete(route('boards.destroy', $board))
+            ->assertForbidden();
+
+        expect($board->fresh())->not->toBeNull();
+    });
+});

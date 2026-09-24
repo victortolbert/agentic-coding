@@ -71,4 +71,15 @@ class BoardsController extends Controller
 
         return to_route('boards.show', $board);
     }
+
+    public function destroy(Board $board): RedirectResponse
+    {
+        Gate::authorize('delete', $board);
+
+        $board->delete();
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Board deleted.')]);
+
+        return to_route('boards.index');
+    }
 }
