@@ -14,6 +14,13 @@ reads every diff, so keep them small enough to read.
   `docs/plans/NN-name.md`, and wait for it to be approved. The plan lists the
   slices you will commit, in order, and the files each one touches.
 
+## Tests are the contract
+
+- Tests that exist before your change are the contract. Do not edit, skip or
+  delete them to make them pass. If you think a test is wrong, stop and say
+  which one and why.
+- A test you add must fail before your change and pass after it.
+
 ## While you work
 
 - One slice per commit. Stop after each slice so the diff can be reviewed.
