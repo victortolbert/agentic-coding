@@ -47,7 +47,7 @@ class BoardsController extends Controller
         Gate::authorize('view', $board);
 
         return Inertia::render('boards/Show', [
-            'board' => $board->only(['id', 'title', 'description', 'is_public']),
+            'board' => $board->only(['id', 'title', 'description']),
             'pins' => $board->pins()->latest()->get(['id', 'board_id', 'image_url', 'note']),
         ]);
     }
@@ -81,45 +81,5 @@ class BoardsController extends Controller
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Board deleted.')]);
 
         return to_route('boards.index');
-    }
-
-    /**
-     * Make the board public so it can be shared with clients.
-     */
-    public function share(Board $board): RedirectResponse
-    {
-        Gate::authorize('update', $board);
-
-        $board->forceFill(['is_public' => true])->save();
-
-        Inertia::flash('toast', ['type' => 'success', 'message' => __('Board shared.')]);
-
-        return to_route('boards.show', $board);
-    }
-
-    /**
-     * Make the board private again.
-     */
-    public function unshare(Board $board): RedirectResponse
-    {
-        Gate::authorize('update', $board);
-
-        $board->forceFill(['is_public' => false])->save();
-
-        Inertia::flash('toast', ['type' => 'success', 'message' => __('Board is private.')]);
-
-        return to_route('boards.show', $board);
-    }
-
-    /**
-     * The public, read-only view of a shared board.
-     */
-    public function public(Board $board): Response
-    {
-        abort_unless($board->is_public, 404);
-
-        return Inertia::render('boards/Public', [
-            'board' => $board->load(['owner', 'pins']),
-        ]);
     }
 }
