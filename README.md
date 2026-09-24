@@ -27,10 +27,10 @@ git diff lesson/01-solution
 | 3. Driving the agent: plans, diffs and review | `lesson/03-start` | `lesson/03-solution` | Have the agent plan the Boards controller, then build it one reviewed slice at a time |
 | 4. Tests as the contract you hand the agent | `lesson/04-start` | `lesson/04-solution` | Turn the todos in `tests/Feature/Boards/BoardPinsTest.php` into failing tests, then have the agent make them pass |
 | 5. Taste at speed: layout, spacing and motion | `lesson/05-start` | `lesson/05-solution` | Write `docs/taste.md` as rules, have the agent apply them to the board page, and judge the result in the browser |
-| 6. Shipping: environments, secrets and the deploy | *not yet published* | | |
+| 6. Shipping: environments, secrets and the deploy | `lesson/06-start` | `lesson/06-solution` | Write `docs/deploy.md`, get CI green on your fork, and put the app on a real URL |
 | 7. When the agent is wrong | *not yet published* | | |
 
-Lessons 6 and 7 are being written. Their checkpoints appear here as each lesson ships; buying the course once covers all of them. Watch this repository, or follow the course, to know when they land.
+Lesson 7 is being written. Their checkpoints appear here as each lesson ships; buying the course once covers all of them. Watch this repository, or follow the course, to know when they land.
 
 ## What you need
 
